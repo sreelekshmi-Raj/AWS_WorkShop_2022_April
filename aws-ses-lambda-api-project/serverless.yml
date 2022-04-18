@@ -1,0 +1,27 @@
+service: aws-ses-project
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: dev
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "ses:*"
+          Resource:
+            - "*"
+        
+
+functions:
+  createContact:
+    handler: handler.createContact
+    events:
+      - http:
+          path: /mail
+          method: POST
+          cors: true
